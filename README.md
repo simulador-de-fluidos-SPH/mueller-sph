@@ -2,17 +2,11 @@
 
 Please see the accompanying [tutorial](https://lucasschuermann.com/writing/implementing-sph-in-2d) for more information.
 
+## Libraries list
+
+- eigen3
+- freeglut
+
 ## Running
-```bash
-# install dependencies (debian/ubuntu)
-apt install libopengl-dev freeglut3-dev libeigen3-dev
 
-# uncomment header in `Makefile` depending on platform
-make
-
-# launch demo
-./sph
-```
-
-## License
-This project is distributed under the [MIT license](LICENSE.md).
+Usar cmake con vcpkg. Descargar la extensión "Cmake Tools" y compilar el codigo

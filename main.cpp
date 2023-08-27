@@ -5,12 +5,16 @@
 #include <GL/glut.h>
 #endif
 
+#include <random>
 #include <iostream>
 #include <vector>
 using namespace std;
 
 #include <eigen3/Eigen/Dense>
 using namespace Eigen;
+
+// Se define el valor de pi como flotante
+#define M_PI 3.14159265358979323846f
 
 // "Particle-Based Fluid Simulation for Interactive Applications" by Müller et al.
 // solver parameters
@@ -60,13 +64,21 @@ const static double VIEW_HEIGHT = 1.5 * 600.f;
 void InitSPH(void)
 {
 	cout << "initializing dam break with " << DAM_PARTICLES << " particles" << endl;
+
+    // Crear un generador de números aleatorios utilizando la semilla actual del reloj
+	random_device rd;
+    mt19937 gen(rd());
+
+    uniform_real_distribution<float> dist(0.0f, 1.0f);
+
 	for (float y = EPS; y < VIEW_HEIGHT - EPS * 2.f; y += H)
 	{
 		for (float x = VIEW_WIDTH / 4; x <= VIEW_WIDTH / 2; x += H)
 		{
 			if (particles.size() < DAM_PARTICLES)
 			{
-				float jitter = static_cast<float>(arc4random()) / static_cast<float>(RAND_MAX);
+				// Generar un valor aleatorio en el rango [0.0, 1.0]
+				float jitter = dist(gen);
 				particles.push_back(Particle(x + jitter, y));
 			}
 			else
@@ -193,7 +205,8 @@ void Render(void)
 	glutSwapBuffers();
 }
 
-void Keyboard(unsigned char c, __attribute__((unused)) int x, __attribute__((unused)) int y)
+// , __attribute__((unused)) int x, __attribute__((unused)) int y
+void Keyboard(unsigned char c, int /* x */, int /* y */)
 {
 	switch (c)
 	{
